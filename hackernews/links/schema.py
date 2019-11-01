@@ -12,6 +12,11 @@ class LinkType(DjangoObjectType):
         model = Link
 
 
+class VoteType(DjangoObjectType):
+    class Meta:
+        model = Vote
+
+
 class CreateVote(graphene.Mutation):
     user = graphene.Field(UserType)
     link = graphene.Field(LinkType)
@@ -38,9 +43,13 @@ class CreateVote(graphene.Mutation):
 
 class Query(graphene.ObjectType):
     links = graphene.List(LinkType)
+    votes = graphene.List(VoteType)
 
     def resolve_links(self, info, **kwargs):
         return Link.objects.all()
+
+    def resolve_votes(self, info, **kwargs):
+        return Vote.objects.all()
 
 
 class CreateLink(graphene.Mutation):
