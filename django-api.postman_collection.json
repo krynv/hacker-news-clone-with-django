@@ -1,0 +1,293 @@
+{
+	"info": {
+		"_postman_id": "2c720763-308a-420d-a437-172e149a5356",
+		"name": "z django-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "tokenAuth",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InZrIiwiZXhwIjoxNTcyNjA2MjQ4LCJvcmlnSWF0IjoxNTcyNjA1OTQ4fQ.j7jyODNs_mmjIyG_LmaybLAN_W4KmHz2SmKUHlaf9KE",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\n    tokenAuth(username: \"vk\", password: \"password\") {\n        token\n    }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createLink",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InZrIiwiZXhwIjoxNTcyNjE1NTAyLCJvcmlnSWF0IjoxNTcyNjE1MjAyfQ.AEGmW2dN3Po8I5CkzqE5L_xDItsoC2QukWDRE-nWKxo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\n    createLink(url: \"google.com\", description: \"google\") {\n        id\n        url\n        description \n        postedBy {\n            id\n            username\n            email\n        }\n    }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"graphql",
+						""
+					]
+				},
+				"description": "with auth"
+			},
+			"response": []
+		},
+		{
+			"name": "createVote",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InZrIiwiZXhwIjoxNTcyNjE1NTAyLCJvcmlnSWF0IjoxNTcyNjE1MjAyfQ.AEGmW2dN3Po8I5CkzqE5L_xDItsoC2QukWDRE-nWKxo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\n    createVote(linkId: 1) {\n        user {\n            id\n            username\n            email\n        }\n        link {\n            id\n            description\n            url\n        }\n    }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "votes",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InZrIiwiZXhwIjoxNTcyNjE3MjM3LCJvcmlnSWF0IjoxNTcyNjE2OTM3fQ.FpVmcUy9KP9rxyN25nXnAvA0TOsEn6jd2J9hJWvsyTY",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "{\n    votes {\n        id\n        user {\n            id\n            username\n        }\n        link {\n            id\n            url\n        }\n    }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "links",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InZrIiwiZXhwIjoxNTcyNjE3MjM3LCJvcmlnSWF0IjoxNTcyNjE2OTM3fQ.FpVmcUy9KP9rxyN25nXnAvA0TOsEn6jd2J9hJWvsyTY"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "{\n    links(search: \"flix\") {\n        id\n        url\n        description\n        votes {\n            id\n            user {\n                id\n                username\n            }\n        }\n    }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "relayLinks",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InZrIiwiZXhwIjoxNTcyNjE3MjM3LCJvcmlnSWF0IjoxNTcyNjE2OTM3fQ.FpVmcUy9KP9rxyN25nXnAvA0TOsEn6jd2J9hJWvsyTY"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "{\n    links(search: \"flix\") {\n        id\n        url\n        description\n        votes {\n            id\n            user {\n                id\n                username\n            }\n        }\n    }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "relayCreateLinks",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InZrIiwiZXhwIjoxNTcyNjE3MjM3LCJvcmlnSWF0IjoxNTcyNjE2OTM3fQ.FpVmcUy9KP9rxyN25nXnAvA0TOsEn6jd2J9hJWvsyTY"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation { \n    relayCreateLink(input: {\n        url: \"maps.google.com\",\n        description: \"google maps\"\n    }) {\n        link { \n            id\n            url\n            description\n        }\n    }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/graphql/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "test-nest",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
