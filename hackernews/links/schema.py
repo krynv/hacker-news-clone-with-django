@@ -1,11 +1,10 @@
+from django.db.models import Q
 import graphene
 from graphene_django import DjangoObjectType
 from graphql import GraphQLError
-from django.db.models import Q
 
-from .models import Link
 from users.schema import UserType
-from links.models import Link, Vote
+from .models import Link, Vote
 
 
 class LinkType(DjangoObjectType):
@@ -16,30 +15,6 @@ class LinkType(DjangoObjectType):
 class VoteType(DjangoObjectType):
     class Meta:
         model = Vote
-
-
-class CreateVote(graphene.Mutation):
-    user = graphene.Field(UserType)
-    link = graphene.Field(LinkType)
-
-    class Arguments:
-        link_id = graphene.Int()
-
-    def mutate(self, info, link_id):
-        user = info.context.user
-        if user.is_anonymous:
-            raise GraphQLError('You must be logged to vote!')
-
-        link = Link.objects.filter(id=link_id).first()
-        if not link:
-            raise Exception('Invalid Link!')
-
-        Vote.objects.create(
-            user=user,
-            link=link,
-        )
-
-        return CreateVote(user=user, link=link)
 
 
 class Query(graphene.ObjectType):
@@ -62,7 +37,7 @@ class Query(graphene.ObjectType):
             qs = qs.filter(filter)
 
         if skip:
-            qs = qs[skip:]
+            qs = qs[skip::]
 
         if first:
             qs = qs[:first]
@@ -84,8 +59,7 @@ class CreateLink(graphene.Mutation):
         description = graphene.String()
 
     def mutate(self, info, url, description):
-        user = info.context.user or None
-
+        user = info.context.user
         link = Link(
             url=url,
             description=description,
@@ -99,6 +73,30 @@ class CreateLink(graphene.Mutation):
             description=link.description,
             posted_by=link.posted_by,
         )
+
+
+class CreateVote(graphene.Mutation):
+    user = graphene.Field(UserType)
+    link = graphene.Field(LinkType)
+
+    class Arguments:
+        link_id = graphene.Int()
+
+    def mutate(self, info, link_id):
+        user = info.context.user
+        if user.is_anonymous:
+            raise GraphQLError('You must be logged in to vote!')
+
+        link = Link.objects.filter(id=link_id).first()
+        if not link:
+            raise Exception('Invalid Link!')
+
+        Vote.objects.create(
+            user=user,
+            link=link,
+        )
+
+        return CreateVote(user=user, link=link)
 
 
 class Mutation(graphene.ObjectType):
